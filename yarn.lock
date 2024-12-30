@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@akira1ce/r-hooks@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/@akira1ce/r-hooks/-/r-hooks-1.0.6.tgz#ace6fe26cacefe0417e4bec256b4640d28a33093"
+  integrity sha512-1eWrXArerYqO2P4FMbXXkAliuT5RpTb17S66sIy4LJ6PRnyxmnejYzimLz91KlUvBKW/q589wQiP9iVGd/lFgA==
+
 "@alloc/quick-lru@^5.2.0":
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
