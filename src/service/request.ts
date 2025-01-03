@@ -37,7 +37,6 @@ function put<T>(url: string, params?: any, options?: AxiosInterceptorOptions) {
   return request<T>(url, params, 'put', options);
 }
 
-// 封装DELETE请求
 function del<T>(url: string, params?: any, options?: AxiosInterceptorOptions) {
   return request<T>(url, params, 'delete', options);
 }
