@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const baseURL = process.env.BASEAPIURL;
+export const baseURL = process.env.BASE_API_URL;
 
 const service = axios.create({
   baseURL,
