@@ -1,15 +1,20 @@
-import { create } from 'zustand';
+import { createWithImmer } from '@/utils/zustand';
 
-export interface State {
-  count: number;
-  increment: () => void;
-  decrement: () => void;
-}
-
-const useCount = create<State>((set) => ({
+export const useCounter = createWithImmer(() => ({
   count: 1,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 })),
 }));
 
-export default useCount;
+const set = useCounter.setState;
+
+export const counterActions = {
+  increment: () =>
+    set((state) => {
+      state.count += 1;
+      return state;
+    }),
+  decrement: () =>
+    set((state) => {
+      state.count -= 1;
+      return state;
+    }),
+};

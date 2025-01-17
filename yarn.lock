@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@akira1ce/r-hooks@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/@akira1ce/r-hooks/-/r-hooks-1.0.6.tgz#ace6fe26cacefe0417e4bec256b4640d28a33093"
-  integrity sha512-1eWrXArerYqO2P4FMbXXkAliuT5RpTb17S66sIy4LJ6PRnyxmnejYzimLz91KlUvBKW/q589wQiP9iVGd/lFgA==
-
 "@alloc/quick-lru@^5.2.0":
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
@@ -1428,6 +1423,11 @@ ignore@^5.2.0, ignore@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.3.1.tgz#5073e554cd42c5b33b394375f538b8593e34d4ef"
   integrity sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==
+
+immer@^10.1.1:
+  version "10.1.1"
+  resolved "https://registry.npmjs.org/immer/-/immer-10.1.1.tgz#206f344ea372d8ea176891545ee53ccc062db7bc"
+  integrity sha512-s2MPrmjovJcoMaHtx6K11Ra7oD05NT97w1IC5zpMkT6Atjr7H8LjaDd81iIxUYpMKSRRNMJE703M1Fhr/TctHw==
 
 import-fresh@^3.2.1:
   version "3.3.0"
