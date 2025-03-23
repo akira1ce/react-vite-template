@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 const BaseLayout: React.FC = () => {
   return (
     <>
-      <div className="text-center text-xl font-bold">Vite-React-Temp</div>
+      <div className="text-center text-xl font-bold p-2">Vite-React-Temp</div>
       <Outlet />
     </>
   );
