@@ -1,34 +1,67 @@
-# React + TypeScript + Vite + zustand + axios
+# Vite + React + TypeScript + zustand + axios + BFF
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+BFF combined with MVC front-end practice.
 
 ## 项目结构
 
 ```
-public/
-src/
-  ├── assets/
-  ├── configs/
-  ├── layouts/
-  ├── models/
-  ├── pages/
-  ├── services/
-  ├── App.css
-  ├── App.tsx
-  ├── main.tsx
-  ├── tailwind.css
-  ├── vite-env.d.ts
-.env
-.eslintrc.cjs
-.gitignore
-.prettierignore
-.prettierrc
-index.html
-package.json
-postcss.config.js
-README.md
-tailwind.config.js
-tsconfig.app.json
-tsconfig.json
-tsconfig.node.json
-vite.config.ts
+react-vite-temp
+├─ .env
+├─ .eslintrc.cjs
+├─ .prettierignore
+├─ .prettierrc
+├─ README.md
+├─ index.html
+├─ package.json
+├─ postcss.config.js
+├─ public
+│  └─ vite.svg
+├─ src
+│  ├─ App.css
+│  ├─ App.tsx
+│  ├─ assets
+│  │  └─ react.svg
+│  ├─ components
+│  │  ├─ Loading.tsx
+│  │  └─ WithAuth.tsx
+│  ├─ configs
+│  │  └─ router.ts
+│  ├─ hooks
+│  │  ├─ use.ts
+│  │  └─ useAuth.ts
+│  ├─ layouts
+│  │  └─ BaseLayout.tsx
+│  ├─ main.tsx
+│  ├─ pages
+│  │  ├─ ErrorBoundary.tsx
+│  │  ├─ Forbidden.tsx
+│  │  ├─ NotFound.tsx
+│  │  ├─ home
+│  │  │  ├─ components
+│  │  │  │  └─ list.tsx
+│  │  │  ├─ controller.ts
+│  │  │  ├─ index.tsx
+│  │  │  └─ service.ts
+│  │  └─ test
+│  │     └─ test.tsx
+│  ├─ services
+│  │  └─ global-api.ts
+│  ├─ stores
+│  │  ├─ useApp.ts
+│  │  └─ useCounter.ts
+│  ├─ tailwind.css
+│  ├─ utils
+│  │  ├─ interceptor.ts
+│  │  ├─ request.ts
+│  │  ├─ router.ts
+│  │  └─ zustand.ts
+│  └─ vite-env.d.ts
+├─ tailwind.config.js
+├─ tsconfig.app.json
+├─ tsconfig.json
+├─ tsconfig.node.json
+├─ vite.config.ts
+└─ yarn.lock
 ```
