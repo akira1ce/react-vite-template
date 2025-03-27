@@ -15,30 +15,30 @@ function request<T>(url: string, params: any, method: string, options = {}) {
       ...options,
     })
       .then((res: any) => {
-        /* success or failed */
-        if (res.code === 0) resolve(res);
+        console.log('res :>> ', res);
+        /* custom code to success or failed */
+        if (1) resolve(res);
         else reject(res);
       })
       .catch((err) => {
         reject(err);
+        console.error(err);
       });
   });
 }
 
-function get<T>(url: string, params?: any, options?: AxiosInterceptorOptions) {
+export function get<T, K = any>(url: string, params?: K, options?: AxiosInterceptorOptions) {
   return request<T>(url, params, 'get', options);
 }
 
-function post<T>(url: string, params?: any, options?: AxiosInterceptorOptions) {
+export function post<T, K = any>(url: string, params?: K, options?: AxiosInterceptorOptions) {
   return request<T>(url, params, 'post', options);
 }
 
-function put<T>(url: string, params?: any, options?: AxiosInterceptorOptions) {
+export function put<T, K = any>(url: string, params?: K, options?: AxiosInterceptorOptions) {
   return request<T>(url, params, 'put', options);
 }
 
-function del<T>(url: string, params?: any, options?: AxiosInterceptorOptions) {
+export function del<T, K = any>(url: string, params?: K, options?: AxiosInterceptorOptions) {
   return request<T>(url, params, 'delete', options);
 }
-
-export default { get, post, put, del };

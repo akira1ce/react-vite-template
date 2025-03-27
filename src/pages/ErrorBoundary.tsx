@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
-const ErrorPage: React.FC = () => {
+const ErrorBoundary: React.FC = () => {
   return (
     <div className="flex h-full w-full items-center justify-center text-xl">
       <div className="flex flex-col items-center justify-center gap-4">
@@ -12,4 +12,4 @@ const ErrorPage: React.FC = () => {
   );
 };
 
-export default ErrorPage;
+export default ErrorBoundary;

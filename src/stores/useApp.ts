@@ -6,17 +6,17 @@ export interface UserInfo {
   role: string;
 }
 
-export interface UserStore {
+export interface AppStore {
   userInfo: Partial<UserInfo>;
   permissions: string[];
 }
 
-export const useUser = createWithImmer<UserStore>(() => ({
+export const useApp = createWithImmer<AppStore>(() => ({
   userInfo: {},
   permissions: [],
 }));
 
-const set = useUser.setState;
+const set = useApp.setState;
 
 export const appActions = {
   setPermisstions(permissions: string[]) {

@@ -13,7 +13,8 @@ service.interceptors.request.use((config) => {
 });
 
 service.interceptors.response.use((response) => {
-  return response;
+  const res = response.data;
+  return res;
 });
 
 export default service;
