@@ -1,6 +1,6 @@
-import { RouterProvider, RouterProviderProps } from 'react-router-dom';
+import { RouterProvider, RouterProviderProps } from 'react-router';
 import './App.css';
-import createRouter from '@/configs/router.config.ts';
+import createRouter from '@/utils/router';
 import { useEffect, useState } from 'react';
 import Loading from './components/Loading';
 
