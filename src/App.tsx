@@ -1,22 +1,24 @@
-import { RouterProvider, RouterProviderProps } from 'react-router';
+import { RouterProvider } from 'react-router';
 import './App.css';
-import createRouter from '@/utils/router';
-import { useEffect, useState } from 'react';
-import Loading from './components/Loading';
+import { createRouter } from './utils/router';
+import { useEffect, useMemo } from 'react';
+import { appActions, useApp } from './stores/useApp';
+import { MOCK_ROUTES } from './constants/routes';
 
 function App() {
-  const [routes, setRoutes] = useState<RouterProviderProps['router']>();
+  const { routers } = useApp();
 
   useEffect(() => {
-    createRouter().then((res) => setRoutes(res));
+    appActions.setRouters(MOCK_ROUTES);
   }, []);
 
-  if (!routes) return <Loading />;
-  return (
-    <>
-      <RouterProvider router={routes} />
-    </>
-  );
+  const router = useMemo(() => {
+    if (!routers.length) return;
+    const router = createRouter(routers);
+    return router;
+  }, [routers]);
+
+  return <>{router && <RouterProvider router={router} />}</>;
 }
 
 export default App;

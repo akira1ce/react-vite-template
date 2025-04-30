@@ -1,52 +1,64 @@
 import { createBrowserRouter, RouteObject } from 'react-router';
 import { routes } from '@/configs/router';
+import { buildTree } from './transfer';
+import { Route } from '@/stores/useApp';
 
-interface DynamicRoute {
-  path: string;
-  component: string;
+export interface DynamicRoute extends Route {
   children?: DynamicRoute[];
 }
 
+/* 导入所有页面组件 */
+const modules = import.meta.glob('../pages/**/index.tsx');
+
 /* 转换路由配置 */
-const transferRoutes = (routes: DynamicRoute[]): RouteObject[] => {
-  return routes.map((route) => ({
-    path: route.path,
-    lazy: async () => {
-      const Component = (await import(`../pages${route.component}`)).default;
-      return { Component };
-    },
-    children: route.children ? transferRoutes(route.children) : [],
-  }));
+export const transferRoutes = (routes: DynamicRoute[]): RouteObject[] => {
+  return routes.map((route) => {
+    let lazy = undefined;
+
+    if (route.component) {
+      lazy = async () => {
+        const path = `../pages${route.component}`;
+        const loader = modules[path];
+
+        if (!loader) {
+          console.error(`[Router] No matching module found for path: ${path}`);
+          throw new Error(`Page component not found: ${path}`);
+        }
+
+        try {
+          const mod: any = await loader();
+          return { Component: mod.default };
+        } catch (err) {
+          console.error(`[Router] Failed to load module: ${path}`, err);
+          throw err;
+        }
+      };
+    }
+
+    const children = route.children ? transferRoutes(route.children) : [];
+
+    /* 如果子路由存在，则将第一个子路由设置为默认路由 */
+    if (children.length > 0) {
+      children.unshift({ index: true, lazy: children[0].lazy });
+    }
+
+    return {
+      path: route.path,
+      lazy,
+      children,
+    };
+  });
 };
 
-/* 获取动态路由配置 */
-const getDynamicRoutes = async () => {
-  const routes = [
-    {
-      path: '/test',
-      component: '/test/test.tsx',
-      children: [],
-    },
-  ];
+/* 创建路由 */
+export const createRouter = (dynamicRoutes: DynamicRoute[]) => {
+  const _routes = transferRoutes(buildTree(dynamicRoutes));
 
-  return transferRoutes(routes);
-};
-
-/* 异步创建路由 */
-async function createRouter() {
-  /* 创建初始路由 */
+  /* 合并路由 */
   const baseRouter = [...routes];
+  baseRouter[0].children!.splice(-1, 0, ..._routes);
 
-  try {
-    const dynamicRoutes = await getDynamicRoutes();
-    // 将动态路由添加到根路由的 children 中
-    baseRouter[0].children!.splice(-1, 0, ...dynamicRoutes);
-    // console.log('baseRouter :>> ', baseRouter);
-    return createBrowserRouter(baseRouter);
-  } catch (error) {
-    console.error('Failed to fetch dynamic routes:', error);
-    return createBrowserRouter(baseRouter);
-  }
-}
+  console.log('baseRouter :>> ', baseRouter);
 
-export default createRouter;
+  return createBrowserRouter(baseRouter);
+};
