@@ -28,6 +28,8 @@ react-vite-temp
 │  │  └─ WithAuth.tsx
 │  ├─ configs
 │  │  └─ router.ts
+│  ├─ constants
+│  │  └─ routes.ts
 │  ├─ hooks
 │  │  ├─ use.ts
 │  │  └─ useAuth.ts
@@ -43,9 +45,10 @@ react-vite-temp
 │  │  │  │  └─ list.tsx
 │  │  │  ├─ controller.ts
 │  │  │  ├─ index.tsx
-│  │  │  └─ service.ts
+│  │  │  ├─ service.ts
+│  │  │  └─ type.ts
 │  │  └─ test
-│  │     └─ test.tsx
+│  │     └─ index.tsx
 │  ├─ services
 │  │  └─ global-api.ts
 │  ├─ stores
@@ -56,6 +59,7 @@ react-vite-temp
 │  │  ├─ interceptor.ts
 │  │  ├─ request.ts
 │  │  ├─ router.ts
+│  │  ├─ transfer.ts
 │  │  └─ zustand.ts
 │  └─ vite-env.d.ts
 ├─ tailwind.config.js
@@ -64,4 +68,5 @@ react-vite-temp
 ├─ tsconfig.node.json
 ├─ vite.config.ts
 └─ yarn.lock
+
 ```
