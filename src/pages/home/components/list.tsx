@@ -1,7 +1,7 @@
 import { use } from '@/hooks/use';
 import { getOverUsersInfo } from '../controller';
 
-export default function CurrentList({ promise }: { promise: ReturnType<typeof getOverUsersInfo> }) {
+export default function List({ promise }: { promise: ReturnType<typeof getOverUsersInfo> }) {
   const users = use(promise);
   return (
     <div className="space-y-2">

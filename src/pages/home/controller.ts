@@ -1,21 +1,12 @@
 /**
- * Controller 层 - 直接对接 UI 层
- * 完成额外的数据处理逻辑，可能包括
+ * 「controller」
+ * 直接对接 UI 层，完成额外的数据处理逻辑，可能包括
  * 1. 数据校验
  * 2. 数据二次处理, 整理返回给 View 层的基本格式
+ * 3. 组件级别的 hooks
  */
 import { getUsersInfo } from './service';
-
-// 定义 UI 组件需要的数据结构
-export interface OverUserInfo {
-  id: string;
-  email: string;
-  gender: string;
-  name: string;
-  nat: string;
-  thumbnail: string;
-  desc: string;
-}
+import { OverUserInfo } from './type';
 
 export async function getOverUsersInfo() {
   const list = await getUsersInfo();

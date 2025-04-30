@@ -3,10 +3,9 @@ import { Outlet } from 'react-router';
 
 const BaseLayout: React.FC = () => {
   return (
-    <>
-      <div className="text-center text-xl font-bold p-2">Vite-React-Temp</div>
+    <div className="relative flex h-screen w-screen items-center justify-center">
       <Outlet />
-    </>
+    </div>
   );
 };
 

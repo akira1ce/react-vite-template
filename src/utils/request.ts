@@ -1,5 +1,7 @@
-import { AxiosInterceptorOptions } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import instance from './interceptor';
+
+export type ExtraOptions = Pick<AxiosRequestConfig, 'timeout' | 'headers' | 'responseType'>;
 
 function request<T>(url: string, params: any, method: string, options = {}) {
   return new Promise<T>(async (resolve, reject) => {
@@ -27,18 +29,19 @@ function request<T>(url: string, params: any, method: string, options = {}) {
   });
 }
 
-export function get<T, K = any>(url: string, params?: K, options?: AxiosInterceptorOptions) {
+export function get<T, K = any>(url: string, params?: K, options?: ExtraOptions) {
   return request<T>(url, params, 'get', options);
 }
 
-export function post<T, K = any>(url: string, params?: K, options?: AxiosInterceptorOptions) {
+export function post<T, K = any>(url: string, params?: K, options?: ExtraOptions) {
+  console.log('params :>> ', params);
   return request<T>(url, params, 'post', options);
 }
 
-export function put<T, K = any>(url: string, params?: K, options?: AxiosInterceptorOptions) {
+export function put<T, K = any>(url: string, params?: K, options?: ExtraOptions) {
   return request<T>(url, params, 'put', options);
 }
 
-export function del<T, K = any>(url: string, params?: K, options?: AxiosInterceptorOptions) {
+export function del<T, K = any>(url: string, params?: K, options?: ExtraOptions) {
   return request<T>(url, params, 'delete', options);
 }

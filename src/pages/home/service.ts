@@ -1,23 +1,10 @@
-// Service层 -  应该与服务端提供的接口文档严格保持一致
+/*
+ *「service」
+ * 应该与服务端提供的接口文档严格保持一致
+ */
 
 import { get } from '@/utils/request';
-
-export interface UserInfo {
-  email: string;
-  gender: string;
-  name: {
-    first: string;
-    last: string;
-  };
-  nat: string;
-  picture: {
-    thumbnail: string;
-  };
-}
-
-export interface UserInfoResult {
-  results: UserInfo[];
-}
+import { UserInfo, UserInfoResult } from './type';
 
 export async function getUpUserInfo() {
   const url = 'https://randomuser.me/api/?results=2&inc=name,gender,email,nat,picture&noinfo';
