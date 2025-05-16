@@ -1,7 +1,8 @@
-import { createBrowserRouter, RouteObject } from 'react-router';
+import { createBrowserRouter, Navigate, RouteObject } from 'react-router';
 import { routes } from '@/configs/router';
 import { buildTree } from './transfer';
 import { Route } from '@/stores/useApp';
+import { cloneDeep } from 'lodash';
 
 export interface DynamicRoute extends Route {
   children?: DynamicRoute[];
@@ -17,7 +18,7 @@ export const transferRoutes = (routes: DynamicRoute[]): RouteObject[] => {
 
     if (route.component) {
       lazy = async () => {
-        const path = `../pages${route.component}`;
+        const path = `../pages${route.component}.tsx`;
         const loader = modules[path];
 
         if (!loader) {
@@ -54,11 +55,21 @@ export const transferRoutes = (routes: DynamicRoute[]): RouteObject[] => {
 export const createRouter = (dynamicRoutes: DynamicRoute[]) => {
   const _routes = transferRoutes(buildTree(dynamicRoutes));
 
-  /* 合并路由 */
-  const baseRouter = [...routes];
-  baseRouter[0].children!.splice(-1, 0, ..._routes);
+  let rootIndexRoute: RouteObject = { index: true };
 
-  console.log('baseRouter :>> ', baseRouter);
+  /* 如果存在根路由，则设置根路由的默认路由 */
+  if (_routes.length) {
+    let indexPath = _routes[0].path;
+    if (!indexPath) {
+      console.error('[Router] No matching index path found');
+      return;
+    }
+    rootIndexRoute.Component = () => <Navigate to={indexPath} />;
+  }
+
+  /* 合并路由 */
+  const baseRouter = cloneDeep(routes);
+  baseRouter[0].children!.splice(-1, 0, rootIndexRoute, ..._routes);
 
   return createBrowserRouter(baseRouter);
 };

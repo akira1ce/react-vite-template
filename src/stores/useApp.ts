@@ -11,7 +11,9 @@ export interface Route {
   label: string;
   parentId: number | null;
   icon?: string;
+  /* 组件路径 - 约定路由不需要后缀.tsx */
   component?: string;
+  /* 是否为布局组件 */
   layout: boolean;
 }
 

@@ -10,7 +10,7 @@ export const MOCK_ROUTES = [
     label: '首页',
     icon: 'home',
     parentId: null,
-    component: '/home/index.tsx',
+    component: '/home/index',
     layout: true,
   },
   {
@@ -19,7 +19,7 @@ export const MOCK_ROUTES = [
     label: '测试',
     icon: 'test',
     parentId: null,
-    component: '/test/index.tsx',
+    component: '/test/index',
     layout: true,
   },
 ];
