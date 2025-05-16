@@ -7,7 +7,7 @@ export function useAuth(codes: string[]) {
 
   const isAccess = useMemo(() => {
     return intersection(permissions, codes).length === codes.length;
-  }, [permissions, codes]);
+  }, [permissions]);
 
   return { isAccess };
 }
