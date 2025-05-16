@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const baseURL = import.meta.env.BASE_URL;
+export const baseURL = import.meta.env.VITE_BASE_API_URL;
 
 const service = axios.create({
   baseURL,
