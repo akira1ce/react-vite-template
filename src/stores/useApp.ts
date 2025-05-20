@@ -15,6 +15,7 @@ export interface Route {
   component?: string;
   /* 是否为布局组件 */
   layout: boolean;
+  sort: number;
 }
 
 export interface AppStore {
