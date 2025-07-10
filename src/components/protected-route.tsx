@@ -1,7 +1,7 @@
 import { usePermission } from '@/hooks/usePermission';
 import { Navigate } from 'react-router';
 import { useAuth } from '@/hooks/useAuth';
-import Loading from './Loading';
+import Loading from './loading';
 
 interface ProtectedRouteProps {
   codes: string[];
