@@ -1,12 +1,12 @@
-import { Lock } from 'lucide-react';
+import { CircleDashed } from 'lucide-react';
 import { Link } from 'react-router';
 
-const Forbidden = () => {
+const NotFound = () => {
   return (
     <>
       <div className="flex h-full w-full flex-col items-center justify-center gap-4">
-        <Lock className="mb-10 size-32 font-bold text-blue-500" />
-        <div className="text-center text-2xl text-gray-500">Forbidden</div>
+        <CircleDashed className="mb-10 size-32 font-bold text-blue-500" />
+        <div className="text-center text-2xl text-gray-500">Page not found</div>
         <Link className="text-gray-400 underline" to={'/'}>
           Back home
         </Link>
@@ -15,4 +15,4 @@ const Forbidden = () => {
   );
 };
 
-export default Forbidden;
+export default NotFound;
