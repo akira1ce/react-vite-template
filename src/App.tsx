@@ -4,12 +4,26 @@ import { createRouter } from './utils/router';
 import { useEffect, useMemo } from 'react';
 import { appActions, useApp } from './stores/useApp';
 import { MOCK_ROUTES } from './constants/routes';
+import { apiGetPermissions } from './pages/login/service';
 
 function App() {
   const { routers } = useApp();
 
+  const getPermissions = async () => {
+    try {
+      appActions.setLoading(true);
+      const { res } = await apiGetPermissions();
+      appActions.setPermissions(res.permissions);
+      appActions.setLoading(false);
+    } catch (err) {
+      appActions.setLoading(false);
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     appActions.setRouters(MOCK_ROUTES);
+    getPermissions();
   }, []);
 
   const router = useMemo(() => {

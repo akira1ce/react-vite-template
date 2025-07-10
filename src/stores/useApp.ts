@@ -1,8 +1,9 @@
+import { localStorageHelper } from '@/utils/localstorage-helper';
 import { createWithImmer } from '@/utils/zustand';
-export interface UserInfo {
+
+export interface User {
   id: number;
   username: string;
-  role: string;
 }
 
 export interface Route {
@@ -16,31 +17,68 @@ export interface Route {
   /* 是否为布局组件 */
   layout: boolean;
   sort: number;
+  /* 权限 */
+  permissions: string[];
 }
 
 export interface AppStore {
-  userInfo: Partial<UserInfo>;
-  permissions: string[];
+  user: User | null;
   routers: Route[];
+  permissions: string[];
+  loading: boolean;
 }
 
-export const useApp = createWithImmer<AppStore>(() => ({
-  userInfo: {},
-  permissions: [],
+const STORAGE_KEYS = {
+  USER: 'user',
+  PERMISSIONS: 'permissions',
+} as const;
+
+const getInitialState = (): AppStore => ({
+  user: localStorageHelper.getItem<User | null>(STORAGE_KEYS.USER, null),
   routers: [],
-}));
+  permissions: localStorageHelper.getItem<string[]>(STORAGE_KEYS.PERMISSIONS, []),
+  loading: false,
+});
+
+export const useApp = createWithImmer(getInitialState);
 
 const set = useApp.setState;
 
 export const appActions = {
-  setPermisstions(permissions: string[]) {
-    set((state) => {
-      state.permissions = permissions;
-    });
-  },
   setRouters(routers: Route[]) {
     set((state) => {
       state.routers = routers;
     });
+  },
+
+  setUser(user: User | null) {
+    set((state) => {
+      state.user = user;
+    });
+    localStorageHelper.setItem(STORAGE_KEYS.USER, user);
+  },
+
+  setPermissions(permissions: string[]) {
+    set((state) => {
+      state.permissions = permissions;
+    });
+    localStorageHelper.setItem(STORAGE_KEYS.PERMISSIONS, permissions);
+  },
+
+  setLoading(loading: boolean) {
+    set((state) => {
+      state.loading = loading;
+    });
+  },
+
+  // 清除用户相关数据
+  clearUserData() {
+    set((state) => {
+      state.user = null;
+      state.permissions = [];
+      state.routers = [];
+    });
+    localStorageHelper.removeItem(STORAGE_KEYS.USER);
+    localStorageHelper.removeItem(STORAGE_KEYS.PERMISSIONS);
   },
 };

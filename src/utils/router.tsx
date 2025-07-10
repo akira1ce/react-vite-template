@@ -3,6 +3,8 @@ import { routes } from '@/configs/router';
 import { buildTree } from './transfer';
 import { Route } from '@/stores/useApp';
 import { cloneDeep } from 'lodash';
+import ErrorBoundary from '@/pages/error-boundary';
+import ProtectedRoute from '@/components/protected-route';
 
 export interface DynamicRoute extends Route {
   children?: DynamicRoute[];
@@ -27,11 +29,11 @@ export const transferRoutes = (routes: DynamicRoute[]): RouteObject[] => {
         }
 
         try {
-          const mod: any = await loader();
-          return { Component: mod.default };
+          const { default: Comp }: any = await loader();
+          return { element: <ProtectedRoute codes={route.permissions}>{<Comp />}</ProtectedRoute> };
         } catch (err) {
           console.error(`[Router] Failed to load module: ${path}`, err);
-          throw err;
+          return { element: <ErrorBoundary /> };
         }
       };
     }
