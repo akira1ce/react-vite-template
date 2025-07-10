@@ -1,10 +1,11 @@
 import { AxiosRequestConfig } from 'axios';
 import instance from './interceptor';
+import { Response } from '@/services/type';
 
 export type ExtraOptions = Pick<AxiosRequestConfig, 'timeout' | 'headers' | 'responseType'>;
 
 function request<T>(url: string, params: any, method: string, options = {}) {
-  return new Promise<T>(async (resolve, reject) => {
+  return new Promise<Response<T>>(async (resolve, reject) => {
     let data = {};
 
     if (method == 'get') data = { params };
@@ -17,9 +18,8 @@ function request<T>(url: string, params: any, method: string, options = {}) {
       ...options,
     })
       .then((res: any) => {
-        console.log('res :>> ', res);
         /* custom code to success or failed */
-        if (1) resolve(res);
+        if (res.code === 0) resolve(res);
         else reject(res);
       })
       .catch((err) => {
