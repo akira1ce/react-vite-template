@@ -34,7 +34,6 @@ export function get<T, K = any>(url: string, params?: K, options?: ExtraOptions)
 }
 
 export function post<T, K = any>(url: string, params?: K, options?: ExtraOptions) {
-  console.log('params :>> ', params);
   return request<T>(url, params, 'post', options);
 }
 

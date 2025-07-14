@@ -5,7 +5,6 @@ import { Outlet } from 'react-router';
 
 const BaseLayout: React.FC = () => {
   const { logout, isAuth } = useAuth();
-  console.log('isAuth :>> ', isAuth);
 
   return (
     <div className="relative h-screen w-screen">
