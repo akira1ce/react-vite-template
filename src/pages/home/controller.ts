@@ -5,24 +5,24 @@
  * 2. 数据二次处理, 整理返回给 View 层的基本格式
  * 3. 组件级别的 hooks
  */
-import { getUsersInfo } from './service';
-import { OverUserInfo } from './type';
+import { getUsersInfo } from "./service";
+import type { OverUserInfo } from "./type";
 
 export async function getOverUsersInfo() {
-  const list = await getUsersInfo();
-  const overList: OverUserInfo[] = [];
+	const list = await getUsersInfo();
+	const overList: OverUserInfo[] = [];
 
-  list.forEach((item, index) => {
-    overList.push({
-      id: Math.random().toString(16),
-      desc: `${index}、desc`,
-      email: item.email,
-      gender: item.gender,
-      name: item.name.first + ' ' + item.name.last,
-      nat: item.nat,
-      thumbnail: item.picture.thumbnail,
-    });
-  });
+	list.forEach((item, index) => {
+		overList.push({
+			id: Math.random().toString(16),
+			desc: `${index}、desc`,
+			email: item.email,
+			gender: item.gender,
+			name: `${item.name.first} ${item.name.last}`,
+			nat: item.nat,
+			thumbnail: item.picture.thumbnail,
+		});
+	});
 
-  return overList;
+	return overList;
 }

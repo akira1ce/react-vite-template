@@ -1,19 +1,19 @@
-import { User } from '@/stores/useApp';
+import type { User } from "@/stores/useApp";
 
 export interface ApiLoginReq {
-  username: string;
-  password: string;
+	username: string;
+	password: string;
 }
 
 export interface ApiLoginRes {
-  token: string;
-  user: User;
+	token: string;
+	user: User;
 }
 
 export interface ApiLogoutRes {
-  success: boolean;
+	success: boolean;
 }
 
 export interface ApiGetPermissionsRes {
-  permissions: string[];
+	permissions: string[];
 }

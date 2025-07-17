@@ -1,5 +1,5 @@
 type PromiseWithStatus<T> = Promise<T> & {
-  status?: 'pending' | 'fulfilled' | 'rejected';
+  status?: "pending" | "fulfilled" | "rejected";
   value?: T;
   reason?: any;
 };
@@ -8,21 +8,21 @@ type PromiseWithStatus<T> = Promise<T> & {
  * mock React Hooks use method
  */
 export function use<T>(promise: PromiseWithStatus<T>): T {
-  if (promise.status === 'fulfilled') {
+  if (promise.status === "fulfilled") {
     return promise.value as T;
-  } else if (promise.status === 'rejected') {
+  } else if (promise.status === "rejected") {
     throw promise.reason;
-  } else if (promise.status === 'pending') {
+  } else if (promise.status === "pending") {
     throw promise;
   } else {
-    promise.status = 'pending';
+    promise.status = "pending";
     promise.then(
       (result: T) => {
-        promise.status = 'fulfilled';
+        promise.status = "fulfilled";
         promise.value = result;
       },
       (reason: any) => {
-        promise.status = 'rejected';
+        promise.status = "rejected";
         promise.reason = reason;
       }
     );

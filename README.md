@@ -15,8 +15,22 @@ BFF combined with MVC front-end practice.
 - 🗂️ **BFF Architecture** - Backend for Frontend pattern
 - 📁 **MVC Structure** - Organized code with Model-View-Controller pattern
 - 🚦 **React Router** - Client-side routing with protected routes
+- 🧹 **Biome** - All-in-one code formatter and linter replacing ESLint and Prettier
 
 ## Getting Start
+
+`.vscode/settings.json`
+
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit",
+    "quickfix.biome": "explicit"
+  }
+}
+
+```
 
 ```bash
 # clone project

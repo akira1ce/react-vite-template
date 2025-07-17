@@ -1,6 +1,6 @@
-import { get, post } from '@/utils/request';
-import { ApiGetPermissionsRes, ApiLoginReq, ApiLoginRes, ApiLogoutRes } from './type';
-import { mockApi } from '@/constants/mock';
+import { mockApi } from "@/constants/mock";
+import { get, post } from "@/utils/request";
+import type { ApiGetPermissionsRes, ApiLoginReq, ApiLoginRes, ApiLogoutRes } from "./type";
 
 export const apiLogin = (params: ApiLoginReq) => {
   return post<ApiLoginRes>(`${mockApi}/login`, params);

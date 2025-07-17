@@ -1,6 +1,6 @@
-import { useApp } from '@/stores/useApp';
-import { intersection } from 'lodash';
-import { useMemo } from 'react';
+import { intersection } from "lodash";
+import { useMemo } from "react";
+import { useApp } from "@/stores/useApp";
 
 /**
  * 检查权限码是否全部满足
@@ -8,9 +8,9 @@ import { useMemo } from 'react';
  * @returns 是否有权限
  */
 export const checkPermission = (codes: string[]): boolean => {
-  if (!codes.length) return true;
-  const { permissions } = useApp.getState();
-  return intersection(permissions, codes).length === codes.length;
+	if (!codes.length) return true;
+	const { permissions } = useApp.getState();
+	return intersection(permissions, codes).length === codes.length;
 };
 
 /**
@@ -19,12 +19,12 @@ export const checkPermission = (codes: string[]): boolean => {
  * @returns 权限检查结果
  */
 export const usePermission = (codes: string[] = []) => {
-  const { permissions, loading } = useApp();
+	const { permissions, loading } = useApp();
 
-  const isAccess = useMemo(() => {
-    if (!codes.length) return true;
-    return intersection(permissions, codes).length === codes.length;
-  }, [permissions, codes]);
+	const isAccess = useMemo(() => {
+		if (!codes.length) return true;
+		return intersection(permissions, codes).length === codes.length;
+	}, [permissions, codes]);
 
-  return { isAccess, permissions, loading };
+	return { isAccess, permissions, loading };
 };

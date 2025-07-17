@@ -1,20 +1,20 @@
 /* 「view」 */
 
-import { useState, Suspense } from 'react';
-import { getOverUsersInfo } from './controller';
-import List from './components/list';
-import Loading from '@/components/loading';
+import { Suspense, useState } from "react";
+import Loading from "@/components/loading";
+import List from "./components/list";
+import { getOverUsersInfo } from "./controller";
 
 export default function Page() {
-  const [promise] = useState(getOverUsersInfo);
+	const [promise] = useState(getOverUsersInfo);
 
-  return (
-    <div className="flex h-full w-full flex-col items-center justify-center">
-      <div className="w-1/2">
-        <Suspense fallback={<Loading />}>
-          <List promise={promise} />
-        </Suspense>
-      </div>
-    </div>
-  );
+	return (
+		<div className="flex h-full w-full flex-col items-center justify-center">
+			<div className="w-1/2">
+				<Suspense fallback={<Loading />}>
+					<List promise={promise} />
+				</Suspense>
+			</div>
+		</div>
+	);
 }
