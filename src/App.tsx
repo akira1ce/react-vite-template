@@ -1,38 +1,42 @@
-import { RouterProvider } from "react-router";
 import "./App.css";
 import { useCallback, useEffect, useMemo } from "react";
+import { RouterProvider } from "react-router";
+import Loading from "./components/loading";
 import { MOCK_ROUTES } from "./constants/routes";
-import { apiGetPermissions } from "./pages/login/service";
 import { appActions, useApp } from "./stores/useApp";
 import { createRouter } from "./utils/router";
 
 function App() {
-	const { routers } = useApp();
+  const { routes, loading } = useApp();
 
-	const getPermissions = useCallback(async () => {
-		try {
-			appActions.setLoading(true);
-			const { res } = await apiGetPermissions();
-			appActions.setPermissions(res.permissions);
-			appActions.setLoading(false);
-		} catch (err) {
-			appActions.setLoading(false);
-			console.error(err);
-		}
-	}, []);
+  const init = useCallback(async () => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      appActions.setRoutes(MOCK_ROUTES);
+      appActions.setLoading(false);
+    } catch (err) {
+      appActions.setLoading(false);
+      console.error(err);
+    }
+  }, []);
 
-	useEffect(() => {
-		appActions.setRouters(MOCK_ROUTES);
-		getPermissions();
-	}, [getPermissions]);
+  useEffect(() => {
+    console.log("akira.1231", 1231);
+    if (window.location.pathname === "/login") {
+      appActions.setLoading(false);
+      return;
+    }
+    init();
+  }, []);
 
-	const router = useMemo(() => {
-		if (!routers.length) return;
-		const router = createRouter(routers);
-		return router;
-	}, [routers]);
+  const router = useMemo(() => {
+    const router = createRouter(routes);
+    return router;
+  }, [routes]);
 
-	return <>{router && <RouterProvider router={router} />}</>;
+  if (loading) return <Loading />;
+
+  return <>{router && <RouterProvider router={router} />}</>;
 }
 
 export default App;

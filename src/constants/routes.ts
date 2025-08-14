@@ -15,7 +15,7 @@ export const MOCK_ROUTES: Route[] = [
 		component: "/home/index",
 		layout: true,
 		sort: 1,
-		permissions: ["home"],
+		permissions: [],
 	},
 	{
 		id: 2,

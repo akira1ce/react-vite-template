@@ -1,5 +1,5 @@
-import { localStorageHelper } from '@/utils/localstorage-helper';
-import { createWithImmer } from '@/utils/zustand';
+import { localStorageHelper } from "@/utils/localstorage-helper";
+import { createWithImmer } from "@/utils/zustand";
 
 export interface User {
   id: number;
@@ -23,21 +23,21 @@ export interface Route {
 
 export interface AppStore {
   user: User | null;
-  routers: Route[];
+  routes: Route[];
   permissions: string[];
   loading: boolean;
 }
 
 const STORAGE_KEYS = {
-  USER: 'user',
-  PERMISSIONS: 'permissions',
+  USER: "user",
+  PERMISSIONS: "permissions",
 } as const;
 
 const getInitialState = (): AppStore => ({
   user: localStorageHelper.getItem<User | null>(STORAGE_KEYS.USER, null),
-  routers: [],
+  routes: [],
   permissions: localStorageHelper.getItem<string[]>(STORAGE_KEYS.PERMISSIONS, []),
-  loading: false,
+  loading: true,
 });
 
 export const useApp = createWithImmer(getInitialState);
@@ -45,9 +45,9 @@ export const useApp = createWithImmer(getInitialState);
 const set = useApp.setState;
 
 export const appActions = {
-  setRouters(routers: Route[]) {
+  setRoutes(routes: Route[]) {
     set((state) => {
-      state.routers = routers;
+      state.routes = routes;
     });
   },
 
@@ -76,7 +76,7 @@ export const appActions = {
     set((state) => {
       state.user = null;
       state.permissions = [];
-      state.routers = [];
+      state.routes = [];
     });
     localStorageHelper.removeItem(STORAGE_KEYS.USER);
     localStorageHelper.removeItem(STORAGE_KEYS.PERMISSIONS);
