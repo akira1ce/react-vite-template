@@ -1,16 +1,21 @@
-import { mockApi } from "@/constants/mock";
-import { get, post } from "@/utils/request";
-import type { ApiGetPermissionsRes, ApiLoginReq, ApiLoginRes, ApiLogoutRes } from "./type";
+import type { ApiLoginReq } from "./type";
 
-export const apiLogin = (params: ApiLoginReq) => {
-  return post<ApiLoginRes>(`${mockApi}/login`, params);
+const sleep = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-export const apiLogout = () => {
-  return post<ApiLogoutRes>(`${mockApi}/logout`);
+export const apiLogin = async (params: ApiLoginReq) => {
+  await sleep(1000);
+  return { code: 0, res: { user: { id: 1, name: "admin" } as any, token: "123456" } };
+};
+
+export const apiLogout = async () => {
+  await sleep(1000);
+  return { code: 0, res: { message: "success" } };
 };
 
 /* 获取用户权限 */
-export const apiGetPermissions = () => {
-  return get<ApiGetPermissionsRes>(`${mockApi}/getPermissions`);
+export const apiGetPermissions = async () => {
+  await sleep(1000);
+  return { code: 0, res: { permissions: [] } };
 };
