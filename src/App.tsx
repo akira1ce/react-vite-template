@@ -21,7 +21,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("akira.1231", 1231);
     if (window.location.pathname === "/login") {
       appActions.setLoading(false);
       return;
