@@ -19,7 +19,7 @@ const BaseLayout: React.FC = () => {
 	}, []);
 
 	return (
-		<div className="relative h-screen w-screen">
+		<div className="relative h-screen w-screen overflow-auto">
 			{isAuth && (
 				<div className="absolute top-4 right-4 flex items-center gap-2">
 					<LogOut className="cursor-pointer" onClick={logout} />

@@ -1,4 +1,3 @@
-import "./App.css";
 import { useCallback, useEffect, useMemo } from "react";
 import { RouterProvider } from "react-router";
 import Loading from "./components/loading";
