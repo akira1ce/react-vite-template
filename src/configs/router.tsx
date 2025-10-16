@@ -6,13 +6,13 @@ import Login from "@/pages/login";
 import NotFound from "@/pages/not-found";
 
 export const baseRoutes: RouteObject[] = [
-  {
-    path: "/",
-    element: <BaseLayout />,
-    errorElement: <ErrorBoundary />,
-    children: [],
-  },
-  { path: "/login", element: <Login /> },
-  { path: "/403", element: <Forbidden /> },
-  { path: "*", element: <NotFound /> },
+	{
+		path: "/",
+		element: <BaseLayout />,
+		errorElement: <ErrorBoundary />,
+		children: [],
+	},
+	{ path: "/login", element: <Login /> },
+	{ path: "/403", element: <Forbidden /> },
+	{ path: "*", element: <NotFound /> },
 ];

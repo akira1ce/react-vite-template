@@ -21,7 +21,7 @@ const BaseLayout: React.FC = () => {
 	return (
 		<div className="relative h-screen w-screen overflow-auto">
 			{isAuth && (
-				<div className="absolute top-4 right-4 flex items-center gap-2">
+				<div className="absolute right-4 top-4 flex items-center gap-2">
 					<LogOut className="cursor-pointer" onClick={logout} />
 					<a
 						className="cursor-pointer rounded-md bg-gray-100 p-2 hover:bg-gray-200"

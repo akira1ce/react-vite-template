@@ -6,30 +6,30 @@
 /* 「controller-type」 */
 
 export interface OverUserInfo {
-  id: string;
-  email: string;
-  gender: string;
-  name: string;
-  nat: string;
-  thumbnail: string;
-  desc: string;
+	id: string;
+	email: string;
+	gender: string;
+	name: string;
+	nat: string;
+	thumbnail: string;
+	desc: string;
 }
 
 /* 「service-type」 */
 
 export interface UserInfo {
-  email: string;
-  gender: string;
-  name: {
-    first: string;
-    last: string;
-  };
-  nat: string;
-  picture: {
-    thumbnail: string;
-  };
+	email: string;
+	gender: string;
+	name: {
+		first: string;
+		last: string;
+	};
+	nat: string;
+	picture: {
+		thumbnail: string;
+	};
 }
 
 export interface UserInfoResult {
-  results: UserInfo[];
+	results: UserInfo[];
 }

@@ -1,5 +1,4 @@
 /* 「view」 */
-
 import { Suspense, useState } from "react";
 import Loading from "@/components/loading";
 import List from "./components/list";

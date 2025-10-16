@@ -5,36 +5,38 @@ import { MOCK_ROUTES } from "./constants/routes";
 import { appActions, useApp } from "./stores/useApp";
 import { createRouter } from "./utils/router";
 
+appActions.setLoading(true);
+
 function App() {
-  const { routes, loading } = useApp();
+	const { routes, loading } = useApp();
 
-  const init = useCallback(async () => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      appActions.setRoutes(MOCK_ROUTES);
-      appActions.setLoading(false);
-    } catch (err) {
-      appActions.setLoading(false);
-      console.error(err);
-    }
-  }, []);
+	const init = useCallback(async () => {
+		try {
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+			appActions.setRoutes(MOCK_ROUTES);
+			appActions.setLoading(false);
+		} catch (err) {
+			appActions.setLoading(false);
+			console.error(err);
+		}
+	}, []);
 
-  useEffect(() => {
-    if (window.location.pathname === "/login") {
-      appActions.setLoading(false);
-      return;
-    }
-    init();
-  }, []);
+	useEffect(() => {
+		if (window.location.pathname === "/login") {
+			appActions.setLoading(false);
+			return;
+		}
+		init();
+	}, []);
 
-  const router = useMemo(() => {
-    const router = createRouter(routes);
-    return router;
-  }, [routes]);
+	const router = useMemo(() => {
+		const router = createRouter(routes);
+		return router;
+	}, [routes]);
 
-  if (loading) return <Loading />;
+	if (loading) return <Loading />;
 
-  return <>{router && <RouterProvider router={router} />}</>;
+	return <>{router && <RouterProvider router={router} />}</>;
 }
 
 export default App;

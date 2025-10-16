@@ -1,4 +1,4 @@
-const key = 'token';
+const key = "token";
 
 export const getToken = () => localStorage.getItem(key);
 

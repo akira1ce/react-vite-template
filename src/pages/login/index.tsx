@@ -26,10 +26,7 @@ const Login = () => {
 			<div className="mb-20 text-2xl">login</div>
 			<div className="w-full max-w-md space-y-4">
 				<div className="space-y-2">
-					<label
-						htmlFor="username"
-						className="block font-medium text-gray-700 text-sm"
-					>
+					<label htmlFor="username" className="block text-sm font-medium text-gray-700">
 						Username
 					</label>
 					<input
@@ -42,10 +39,7 @@ const Login = () => {
 					/>
 				</div>
 				<div className="space-y-2">
-					<label
-						htmlFor="password"
-						className="block font-medium text-gray-700 text-sm"
-					>
+					<label htmlFor="password" className="block text-sm font-medium text-gray-700">
 						Password
 					</label>
 					<input
