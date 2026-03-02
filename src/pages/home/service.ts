@@ -5,12 +5,12 @@
 import type { UserInfo } from "./type";
 
 export async function getUpUserInfo() {
-	const url = "https://randomuser.me/api/?results=2&inc=name,gender,email,nat,picture&noinfo";
+	const url = "/randomuser-api/api/?results=2&inc=name,gender,email,nat,picture";
 	return await fetch(url).then((res) => res.json());
 }
 
 export async function getDownUserInfo() {
-	const url = "https://randomuser.me/api/?results=2&inc=name,gender,email,nat,picture&noinfo";
+	const url = "/randomuser-api/api/?results=2&inc=name,gender,email,nat,picture";
 	return await fetch(url).then((res) => res.json());
 }
 
