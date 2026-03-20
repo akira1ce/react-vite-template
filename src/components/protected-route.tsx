@@ -1,6 +1,6 @@
 import { Navigate } from "react-router";
-import { useAuth } from "@/hooks/useAuth";
-import { usePermission } from "@/hooks/usePermission";
+import { useAuth } from "@/hooks/use-auth";
+import { usePermission } from "@/hooks/use-permission";
 import Loading from "./loading";
 
 interface ProtectedRouteProps {

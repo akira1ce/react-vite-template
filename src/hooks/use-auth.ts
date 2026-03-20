@@ -2,7 +2,7 @@ import { isEmpty } from "lodash";
 import { useCallback } from "react";
 import { apiLogin, apiLogout } from "@/pages/login/service";
 import type { ApiLoginReq } from "@/pages/login/type";
-import { appActions, useApp } from "@/stores/useApp";
+import { appActions, useApp } from "@/stores/use-app";
 import { removeToken, setToken } from "@/utils/auth";
 
 export function useAuth() {

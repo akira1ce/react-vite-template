@@ -1,4 +1,4 @@
-import type { User } from "@/stores/useApp";
+import type { User } from "@/stores/use-app";
 
 export interface ApiLoginReq {
 	username: string;

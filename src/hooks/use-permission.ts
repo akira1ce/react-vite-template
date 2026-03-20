@@ -1,6 +1,6 @@
 import { intersection } from "lodash";
 import { useMemo } from "react";
-import { useApp } from "@/stores/useApp";
+import { useApp } from "@/stores/use-app";
 
 /**
  * 检查权限码是否全部满足

@@ -1,4 +1,4 @@
-import type { Route } from "@/stores/useApp";
+import type { Route } from "@/stores/use-app";
 
 /**
  * 路由配置「拍平-转换工具在src/utils/transfer.ts」

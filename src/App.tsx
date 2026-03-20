@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { RouterProvider } from "react-router";
 import Loading from "./components/loading";
 import { MOCK_ROUTES } from "./constants/routes";
-import { appActions, useApp } from "./stores/useApp";
+import { appActions, useApp } from "./stores/use-app";
 import { createRouter } from "./utils/router";
 
 appActions.setLoading(true);

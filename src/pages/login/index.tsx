@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { MOCK_ROUTES } from "@/constants/routes";
-import { useAuth } from "@/hooks/useAuth";
-import { appActions } from "@/stores/useApp";
+import { useAuth } from "@/hooks/use-auth";
+import { appActions } from "@/stores/use-app";
 
 const Login = () => {
 	const [username, setUsername] = useState("");
@@ -33,7 +33,7 @@ const Login = () => {
 						type="text"
 						id="username"
 						name="username"
-						className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+						className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
 					/>
@@ -46,7 +46,7 @@ const Login = () => {
 						type="password"
 						id="password"
 						name="password"
-						className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+						className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
@@ -54,7 +54,7 @@ const Login = () => {
 				<div className="pt-2">
 					<button
 						type="button"
-						className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+						className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
 						onClick={handleSubmit}
 					>
 						Login

@@ -3,7 +3,7 @@ import { createBrowserRouter, Navigate, type RouteObject } from "react-router";
 import ProtectedRoute from "@/components/protected-route";
 import { baseRoutes } from "@/configs/router";
 import ErrorBoundary from "@/pages/error-boundary";
-import type { Route } from "@/stores/useApp";
+import type { Route } from "@/stores/use-app";
 import { buildTree } from "./transfer";
 
 export interface DynamicRoute extends Route {
