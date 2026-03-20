@@ -19,12 +19,12 @@ export const checkPermission = (codes: string[]): boolean => {
  * @returns 权限检查结果
  */
 export const usePermission = (codes: string[] = []) => {
-	const { permissions, loading } = useApp();
+	const { permissions } = useApp();
 
 	const isAccess = useMemo(() => {
 		if (!codes.length) return true;
 		return intersection(permissions, codes).length === codes.length;
 	}, [permissions, codes]);
 
-	return { isAccess, permissions, loading };
+	return { isAccess, permissions };
 };

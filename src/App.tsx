@@ -1,38 +1,35 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { RouterProvider } from "react-router";
 import Loading from "./components/loading";
 import { MOCK_ROUTES } from "./constants/routes";
+import { apiGetPermissions } from "./pages/login/service";
 import { appActions, useApp } from "./stores/use-app";
 import { createRouter } from "./utils/router";
-
-appActions.setLoading(true);
 
 function App() {
 	const { routes, loading } = useApp();
 
-	const init = useCallback(async () => {
+	const init = async () => {
 		try {
-			await new Promise((resolve) => setTimeout(resolve, 1000));
+			appActions.setLoading(true);
 			appActions.setRoutes(MOCK_ROUTES);
-			appActions.setLoading(false);
+			const user = useApp.getState().user;
+			if (user) {
+				const { res } = await apiGetPermissions();
+				appActions.setPermissions(res.permissions);
+			}
 		} catch (err) {
-			appActions.setLoading(false);
 			console.error(err);
+		} finally {
+			appActions.setLoading(false);
 		}
-	}, []);
+	};
 
 	useEffect(() => {
-		if (window.location.pathname === "/login") {
-			appActions.setLoading(false);
-			return;
-		}
 		init();
 	}, []);
 
-	const router = useMemo(() => {
-		const router = createRouter(routes);
-		return router;
-	}, [routes]);
+	const router = useMemo(() => createRouter(routes), [routes]);
 
 	if (loading) return <Loading />;
 

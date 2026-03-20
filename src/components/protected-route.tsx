@@ -1,7 +1,6 @@
 import { Navigate } from "react-router";
 import { useAuth } from "@/hooks/use-auth";
 import { usePermission } from "@/hooks/use-permission";
-import Loading from "./loading";
 
 interface ProtectedRouteProps {
 	codes: string[];
@@ -9,13 +8,11 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ codes = [], children }: ProtectedRouteProps) => {
-	const { isAccess, loading } = usePermission(codes);
+	const { isAccess } = usePermission(codes);
 	const { isAuth } = useAuth();
 
-	if (loading) return <Loading />;
-
 	if (!isAuth) return <Navigate to="/login" />;
-	else if (!isAccess) return <Navigate to="/403" />;
+	if (!isAccess) return <Navigate to="/403" />;
 
 	return children;
 };

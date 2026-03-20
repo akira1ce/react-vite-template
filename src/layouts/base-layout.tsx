@@ -1,22 +1,10 @@
 import { Github, LogOut } from "lucide-react";
 import type React from "react";
-import { useEffect } from "react";
 import { Outlet } from "react-router";
 import { useAuth } from "@/hooks/use-auth";
-import { apiGetPermissions } from "@/pages/login/service";
-import { appActions } from "@/stores/use-app";
 
 const BaseLayout: React.FC = () => {
 	const { logout, isAuth } = useAuth();
-
-	const getPermissions = async () => {
-		const { res } = await apiGetPermissions();
-		appActions.setPermissions(res.permissions);
-	};
-
-	useEffect(() => {
-		getPermissions();
-	}, []);
 
 	return (
 		<div className="relative h-screen w-screen overflow-auto">

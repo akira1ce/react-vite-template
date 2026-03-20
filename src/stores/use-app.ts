@@ -78,7 +78,6 @@ export const appActions = {
 		set((state) => {
 			state.user = null;
 			state.permissions = [];
-			state.routes = [];
 		});
 		ls.removeItem(APP_STORAGE_KEYS.USER);
 		ls.removeItem(APP_STORAGE_KEYS.PERMISSIONS);

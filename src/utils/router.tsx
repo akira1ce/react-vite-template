@@ -43,8 +43,11 @@ export const transferRoutes = (routes: DynamicRoute[]): RouteObject[] => {
 		const children = route.children ? transferRoutes(route.children) : [];
 
 		/* 如果子路由存在，则将第一个子路由设置为默认路由 */
-		if (children.length > 0) {
-			children.unshift({ index: true, lazy: children[0].lazy });
+		if (children.length > 0 && route.children?.[0]?.path) {
+			children.unshift({
+				index: true,
+				element: <Navigate to={route.children[0].path} replace />,
+			});
 		}
 
 		return {
@@ -73,7 +76,7 @@ export const createRouter = (dynamicRoutes: DynamicRoute[]) => {
 
 	/* 合并路由 */
 	const baseRouter = cloneDeep(baseRoutes);
-	baseRouter[0].children?.splice(-1, 0, rootIndexRoute, ..._routes);
+	baseRouter[0].children?.push(rootIndexRoute, ..._routes);
 
 	return createBrowserRouter(baseRouter);
 };
