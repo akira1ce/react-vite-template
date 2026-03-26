@@ -1,3 +1,4 @@
+import { apiGetPermissions, apiGetRoutes } from "@/pages/login/service";
 import { localStorageHelper as ls } from "@/utils/localstorage-helper";
 import { createWithImmer } from "@/utils/zustand";
 
@@ -81,5 +82,17 @@ export const appActions = {
 		});
 		ls.removeItem(APP_STORAGE_KEYS.USER);
 		ls.removeItem(APP_STORAGE_KEYS.PERMISSIONS);
+	},
+};
+
+export const appEffects = {
+	async initRoutes() {
+		const { res } = await apiGetRoutes();
+		appActions.setRoutes(res.routes);
+	},
+
+	async initPermissions() {
+		const { res } = await apiGetPermissions();
+		appActions.setPermissions(res.permissions);
 	},
 };

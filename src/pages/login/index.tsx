@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { MOCK_ROUTES } from "@/constants/routes";
 import { useAuth } from "@/hooks/use-auth";
-import { appActions } from "@/stores/use-app";
+import { appActions, appEffects } from "@/stores/use-app";
 
 const Login = () => {
 	const [username, setUsername] = useState("");
@@ -15,8 +14,8 @@ const Login = () => {
 	const handleSubmit = async () => {
 		await login({ username, password });
 		appActions.setLoading(true);
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-		appActions.setRoutes(MOCK_ROUTES);
+		await appEffects.initRoutes();
+		await appEffects.initPermissions();
 		appActions.setLoading(false);
 		navigate("/");
 	};

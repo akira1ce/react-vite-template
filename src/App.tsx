@@ -1,9 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { RouterProvider } from "react-router";
 import Loading from "./components/loading";
-import { MOCK_ROUTES } from "./constants/routes";
-import { apiGetPermissions } from "./pages/login/service";
-import { appActions, useApp } from "./stores/use-app";
+import { appActions, appEffects, useApp } from "./stores/use-app";
 import { createRouter } from "./utils/router";
 
 function App() {
@@ -12,15 +10,11 @@ function App() {
 	const init = async () => {
 		try {
 			appActions.setLoading(true);
-			appActions.setRoutes(MOCK_ROUTES);
-			const user = useApp.getState().user;
-			if (user) {
-				const { res } = await apiGetPermissions();
-				appActions.setPermissions(res.permissions);
-			}
+			await appEffects.initRoutes();
+			await appEffects.initPermissions();
+			appActions.setLoading(false);
 		} catch (err) {
 			console.error(err);
-		} finally {
 			appActions.setLoading(false);
 		}
 	};
