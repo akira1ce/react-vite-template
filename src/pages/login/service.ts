@@ -1,4 +1,3 @@
-import { MOCK_ROUTES } from "@/constants/routes";
 import type { ApiLoginReq } from "./type";
 
 const sleep = (ms: number) => {
@@ -13,18 +12,4 @@ export const apiLogin = async (params: ApiLoginReq) => {
 export const apiLogout = async () => {
 	await sleep(1000);
 	return { code: 0, res: { message: "success" } };
-};
-
-/* 获取用户权限 */
-export const apiGetPermissions = async () => {
-	console.log("akira.apiGetPermissions");
-	await sleep(1000);
-	return { code: 0, res: { permissions: [] } };
-};
-
-/* 获取用户路由 */
-export const apiGetRoutes = async () => {
-	console.log("akira.apiGetRoutes");
-	await sleep(1000);
-	return { code: 0, res: { routes: MOCK_ROUTES } };
 };
