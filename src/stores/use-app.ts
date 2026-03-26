@@ -1,4 +1,4 @@
-import { apiGetPermissions, apiGetRoutes } from "@/pages/login/service";
+import { apiGetPermissions, apiGetRoutes } from "@/services";
 import { localStorageHelper as ls } from "@/utils/localstorage-helper";
 import { createWithImmer } from "@/utils/zustand";
 

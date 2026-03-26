@@ -1,7 +1,8 @@
 import { isEmpty } from "lodash";
 import { useNavigate } from "react-router";
-import { apiGetPermissions, apiLogin, apiLogout } from "@/pages/login/service";
+import { apiLogin, apiLogout } from "@/pages/login/service";
 import type { ApiLoginReq } from "@/pages/login/type";
+import { apiGetPermissions } from "@/services";
 import { appActions, useApp } from "@/stores/use-app";
 import { removeToken, setToken } from "@/utils/auth";
 

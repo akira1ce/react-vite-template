@@ -1,7 +1,7 @@
 import { createWithImmer } from "@/utils/zustand";
 
 export const useCounter = createWithImmer(() => ({
-	count: 1,
+	count: 0,
 }));
 
 const set = useCounter.setState;
