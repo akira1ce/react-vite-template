@@ -1,58 +1,71 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { getToken } from "./auth";
 
-// 扩展 AxiosRequestConfig 以支持自定义属性
+/** 扩展 AxiosRequestConfig 以支持自定义属性 */
 export interface RequestOptions {
-	retry?: number; // 重试次数
-	retryDelay?: number; // 重试延迟(ms)
-	cache?: boolean; // 是否开启缓存
-	cacheTime?: number; // 缓存时间(ms)
-	cancelPrevious?: boolean; // 是否取消上一次同名请求
-	keys?: string[]; // 自定义 key 计算参数，传入后根据数组内容计算 key
-	debounce?: number; // 防抖延迟时间(ms)，在指定时间内重复请求只执行最后一次
-	debounceKey?: string; // 自定义防抖 key，不传则根据请求参数自动生成
+	/** 重试次数 */
+	retry?: number;
+	/** 重试延迟(ms) */
+	retryDelay?: number;
+	/** 是否开启缓存 */
+	cache?: boolean;
+	/** 缓存时间(ms) */
+	cacheTime?: number;
+	/** 是否取消上一次同名请求 */
+	cancelPrevious?: boolean;
+	/** 自定义 key 计算参数，传入后根据数组内容计算 key */
+	keys?: string[];
+	/** 防抖延迟时间(ms)，在指定时间内重复请求只执行最后一次 */
+	debounce?: number;
+	/** 自定义防抖 key，不传则根据请求参数自动生成 */
+	debounceKey?: string;
 }
 
-// 内部使用的 Config 类型（包含 Axios 内部属性 + 自定义属性 + 内部状态）
+/** 内部使用的 Config 类型（包含 Axios 内部属性 + 自定义属性 + 内部状态） */
 interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig, RequestOptions {
-	__retryCount?: number; // 内部记录当前重试次数
-	__requestId?: number; // 内部记录请求 ID，用于避免竞态条件
+	/** 内部记录当前重试次数 */
+	__retryCount?: number;
+	/** 内部记录请求 ID，用于避免竞态条件 */
+	__requestId?: number;
 }
 
-// 缓存数据结构
+/** 缓存数据结构 */
 interface CacheItem {
 	data: any;
 	expire: number;
 }
 
-// 存储取消函数和请求 ID
+/** 存储取消函数和请求 ID */
 interface PendingItem {
 	cancel: (reason?: string) => void;
 	requestId: number;
 }
 
-const pendingMap = new Map<string, PendingItem>(); // 存储取消函数
-const cacheMap = new Map<string, CacheItem>(); // 存储缓存数据
+/** 存储取消函数和请求 ID */
+const pendingMap = new Map<string, PendingItem>();
+/** 存储缓存数据 */
+const cacheMap = new Map<string, CacheItem>();
 
-// 防抖相关数据结构
+/** 防抖相关数据结构 */
 interface DebounceItem {
 	timer: ReturnType<typeof setTimeout>;
 	resolvers: Array<{ resolve: (value: any) => void; reject: (reason: any) => void }>;
 }
-const debounceMap = new Map<string, DebounceItem>(); // 存储防抖定时器
+/** 存储防抖定时器 */
+const debounceMap = new Map<string, DebounceItem>();
 
-// 全局请求 ID 计数器
+/** 全局请求 ID 计数器 */
 let requestIdCounter = 0;
 
-// 生成唯一的 Request Key
+/** 生成唯一的 Request Key */
 const generateReqKey = (config: InternalAxiosRequestConfig | AxiosRequestConfig, keys?: string[]): string => {
-	// 如果传入了自定义 keys，根据数组内容计算 key
+	/** 如果传入了自定义 keys，根据数组内容计算 key */
 	if (keys && keys.length > 0) {
 		const { method, url, params, data } = config;
 		const keyParts: string[] = [method || "", url || ""];
 
 		keys.forEach((key) => {
-			// 优先从 params 中取值，再从 data 中取值
+			/** 优先从 params 中取值，再从 data 中取值 */
 			const paramValue = params?.[key];
 			const dataValue = data?.[key];
 			const value = paramValue !== undefined ? paramValue : dataValue;
@@ -62,11 +75,12 @@ const generateReqKey = (config: InternalAxiosRequestConfig | AxiosRequestConfig,
 		return keyParts.join("&");
 	}
 
-	// 默认计算方式
+	/** 默认计算方式 */
 	const { method, url, params, data } = config;
 	return [method, url, JSON.stringify(params), JSON.stringify(data)].join("&");
 };
 
+/** 创建 Axios 实例 */
 const service: AxiosInstance = axios.create({
 	// baseURL: '/api',
 	timeout: 10000,
@@ -162,13 +176,13 @@ service.interceptors.response.use(
 		const config = response.config as CustomInternalAxiosRequestConfig;
 		const requestKey = generateReqKey(config, config.keys);
 
-		// 只有当 requestId 匹配时才移除，避免删除新请求的取消函数
+		/** 只有当 requestId 匹配时才移除，避免删除新请求的取消函数 */
 		const pending = pendingMap.get(requestKey);
 		if (pending && pending.requestId === config.__requestId) {
 			pendingMap.delete(requestKey);
 		}
 
-		// === C. 写入缓存 (仅 GET) ===
+		/** === C. 写入缓存 (仅 GET) === */
 		if (config.cache && config.method === "get") {
 			cacheMap.set(requestKey, {
 				data: response.data,
@@ -176,47 +190,47 @@ service.interceptors.response.use(
 			});
 		}
 
-		/* akira：额外的处理...（如处理业务错误码等） */
+		/** akira：额外的处理...（如处理业务错误码等） */
 
-		// 注意：这里直接返回 response.data，意味着 request 返回的类型不再是 AxiosResponse
+		/** 注意：这里直接返回 response.data，意味着 request 返回的类型不再是 AxiosResponse */
 		return response.data;
 	},
 	async (error: AxiosError) => {
 		const config = error.config as CustomInternalAxiosRequestConfig | undefined;
 
-		// 如果没有 config (极少见)，直接抛出
+		/** 如果没有 config (极少见)，直接抛出 */
 		if (!config) return Promise.reject(error);
 
 		const requestKey = generateReqKey(config, config.keys);
 
-		// 只有当 requestId 匹配时才移除，避免删除新请求的取消函数
+		/** 只有当 requestId 匹配时才移除，避免删除新请求的取消函数 */
 		const pending = pendingMap.get(requestKey);
 		if (pending && pending.requestId === config.__requestId) {
 			pendingMap.delete(requestKey);
 		}
 
-		// 如果是取消请求，直接抛出，不重试
+		/** 如果是取消请求，直接抛出，不重试 */
 		if (axios.isCancel(error)) {
 			// console.log('Request canceled:', error.message);
-			// 抛出特定的对象以便下游识别
+			/** 抛出特定的对象以便下游识别 */
 			return Promise.reject({ isCanceled: true, message: error.message });
 		}
 
-		// === D. 处理重试 ===
+		/** === D. 处理重试 === */
 		const retryCount = config.retry || 0;
 
-		// 初始化内部重试计数器
+		/** 初始化内部重试计数器 */
 		config.__retryCount = config.__retryCount || 0;
 
-		// 检查是否超过重试次数
+		/** 检查是否超过重试次数 */
 		if (config.__retryCount >= retryCount) {
 			return Promise.reject(error);
 		}
 
-		// 增加重试计数
+		/** 增加重试计数 */
 		config.__retryCount += 1;
 
-		// 创建延时 Promise
+		/** 创建延时 Promise */
 		const backoff = new Promise<void>((resolve) => {
 			setTimeout(() => {
 				resolve();
@@ -225,13 +239,13 @@ service.interceptors.response.use(
 
 		console.log(`Retrying request... (${config.__retryCount}/${retryCount})`);
 
-		// 延时后重新发起请求
+		/** 延时后重新发起请求 */
 		await backoff;
 		return service(config);
 	}
 );
 
-// 联合类型：AxiosRequestConfig 加上我们的自定义属性
+/** 联合类型：AxiosRequestConfig 加上我们的自定义属性 */
 export type RequestConfig = AxiosRequestConfig & RequestOptions;
 
 /**
@@ -240,15 +254,15 @@ export type RequestConfig = AxiosRequestConfig & RequestOptions;
  * @param config 配置项
  */
 export function request<T = any>(url: string, config: RequestConfig = {}): Promise<T> {
-	// 1. 构造完整的配置对象
+	/** 1. 构造完整的配置对象 */
 	const finalConfig = {
 		url,
 		...config,
-		// 默认不取消上一次同名请求，需要时主动传入 true
+		/** 默认不取消上一次同名请求，需要时主动传入 true */
 		cancelPrevious: config.cancelPrevious ?? false,
 	};
 
-	// 2. 如果配置了防抖，则使用防抖逻辑
+	/** 2. 如果配置了防抖，则使用防抖逻辑 */
 	if (config.debounce && config.debounce > 0) {
 		// 优先使用自定义 debounceKey，否则根据 url + method 生成（忽略变化的参数）
 		const debounceKey = config.debounceKey || `${finalConfig.method || "get"}&${url}`;
@@ -314,7 +328,7 @@ export function put<T = any>(url: string, data: any, config: RequestConfig = {})
  * @param config 配置项 (需要包含 method, params 等以生成正确的 key)
  */
 export function cancelRequest(url: string, config: RequestConfig = {}): void {
-	// 构造一个临时的 config 对象用于生成 Key
+	/** 构造一个临时的 config 对象用于生成 Key */
 	const tempConfig = { url, ...config };
 	const key = generateReqKey(tempConfig as AxiosRequestConfig, config.keys);
 
