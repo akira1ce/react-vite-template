@@ -1,6 +1,6 @@
-import { Github, Languages, LogOut } from "lucide-react";
-import type React from "react";
+import { Languages, LogOut } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import type React from "react";
 import { Outlet, useNavigate } from "react-router";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -29,14 +29,6 @@ const BaseLayout: React.FC = () => {
 					{i18n.language === "zh" ? "中" : "EN"}
 				</button>
 				<LogOut className="cursor-pointer" onClick={handleLogout} />
-				<a
-					className="cursor-pointer rounded-md bg-gray-100 p-2 hover:bg-gray-200"
-					target="_blank"
-					href="https://github.com/akira1ce/react-vite-template"
-					rel="noopener"
-				>
-					<Github />
-				</a>
 			</div>
 			<Outlet />
 		</div>
