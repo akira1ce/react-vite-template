@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useAuth } from "@/hooks/use-auth";
-import { appActions, appEffects } from "@/stores/use-app";
 
 const Login = () => {
 	const [username, setUsername] = useState("");
@@ -10,15 +9,10 @@ const Login = () => {
 
 	const { t } = useTranslation("login");
 	const { login } = useAuth();
-
 	const navigate = useNavigate();
 
 	const handleSubmit = async () => {
 		await login({ username, password });
-		appActions.setLoading(true);
-		await appEffects.initRoutes();
-		await appEffects.initPermissions();
-		appActions.setLoading(false);
 		navigate("/");
 	};
 

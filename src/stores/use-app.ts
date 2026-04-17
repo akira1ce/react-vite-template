@@ -32,13 +32,12 @@ export interface AppStore {
 export const APP_STORAGE_KEYS = {
 	USER: "user",
 	PERMISSIONS: "permissions",
-	ROUTES: "routes",
 } as const;
 
 const getInitialState = (): AppStore => ({
 	user: ls.getItem<User | null>(APP_STORAGE_KEYS.USER, null),
-	routes: ls.getItem<Route[]>(APP_STORAGE_KEYS.ROUTES, []),
-	permissions: ls.getItem<string[]>(APP_STORAGE_KEYS.PERMISSIONS, []),
+	routes: [],
+	permissions: [],
 	loading: false,
 });
 
@@ -51,7 +50,6 @@ export const appActions = {
 		set((state) => {
 			state.routes = routes;
 		});
-		ls.setItem(APP_STORAGE_KEYS.ROUTES, routes);
 	},
 
 	setUser(user: User | null) {
@@ -65,7 +63,6 @@ export const appActions = {
 		set((state) => {
 			state.permissions = permissions;
 		});
-		ls.setItem(APP_STORAGE_KEYS.PERMISSIONS, permissions);
 	},
 
 	setLoading(loading: boolean) {
@@ -74,14 +71,13 @@ export const appActions = {
 		});
 	},
 
-	// 清除用户相关数据
 	clearUserData() {
 		set((state) => {
 			state.user = null;
 			state.permissions = [];
+			state.routes = [];
 		});
 		ls.removeItem(APP_STORAGE_KEYS.USER);
-		ls.removeItem(APP_STORAGE_KEYS.PERMISSIONS);
 	},
 };
 

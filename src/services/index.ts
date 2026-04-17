@@ -7,13 +7,13 @@ const sleep = (ms: number) => {
 /* 获取用户权限 */
 export const apiGetPermissions = async () => {
 	console.log("akira.apiGetPermissions");
-	await sleep(1000);
+	await sleep(200);
 	return { code: 0, res: { permissions: ["test"] } };
 };
 
 /* 获取用户路由 */
 export const apiGetRoutes = async () => {
 	console.log("akira.apiGetRoutes");
-	await sleep(1000);
+	await sleep(200);
 	return { code: 0, res: { routes: MOCK_ROUTES } };
 };
