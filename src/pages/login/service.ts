@@ -4,7 +4,7 @@ const sleep = (ms: number) => {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-export const apiLogin = async (params: ApiLoginReq) => {
+export const apiLogin = async (_params: ApiLoginReq) => {
 	await sleep(1000);
 	return { code: 0, res: { user: { id: 1, name: "admin" } as any, token: "123456" } };
 };
