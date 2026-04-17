@@ -1,4 +1,3 @@
-import { isEmpty } from "lodash";
 import { apiLogin, apiLogout } from "@/pages/login/service";
 import type { ApiLoginReq } from "@/pages/login/type";
 import { appActions, useApp } from "@/stores/use-app";
@@ -8,7 +7,7 @@ export function useAuth() {
 	const { user } = useApp();
 
 	const token = getToken();
-	const isAuth = !!token && !isEmpty(user);
+	const isAuth = !!token;
 
 	const login = async (params: ApiLoginReq) => {
 		const { res } = await apiLogin(params);

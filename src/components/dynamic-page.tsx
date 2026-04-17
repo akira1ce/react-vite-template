@@ -58,7 +58,7 @@ export const DynamicPage = () => {
 	if (!LazyComponent) return <NotFound />;
 
 	return (
-		<Suspense fallback={<Loading />}>
+		<Suspense key={currentPath} fallback={<Loading />}>
 			<LazyComponent />
 		</Suspense>
 	);
