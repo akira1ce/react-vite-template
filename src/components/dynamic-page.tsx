@@ -1,4 +1,5 @@
 import { intersection } from "lodash";
+import type React from "react";
 import { lazy, Suspense, useMemo } from "react";
 import { Navigate, useParams } from "react-router";
 import Loading from "@/components/loading";
@@ -17,6 +18,24 @@ interface PageModule {
 
 const modules = import.meta.glob("../pages/**/index.tsx");
 
+const lazyCache = new Map<string, React.LazyExoticComponent<React.ComponentType>>();
+
+const getLazyComponent = (componentPath: string) => {
+	const cached = lazyCache.get(componentPath);
+	if (cached) return cached;
+
+	const path = `../pages${componentPath}.tsx`;
+	const loader = modules[path];
+	if (!loader) {
+		console.error(`[Router] No matching module found for path: ${path}`);
+		return null;
+	}
+
+	const component = lazy(() => loader() as Promise<PageModule>);
+	lazyCache.set(componentPath, component);
+	return component;
+};
+
 const findRoute = (tree: DynamicRoute[], targetPath: string): Route | null => {
 	for (const node of tree) {
 		if (node.component && node.path === targetPath) return node;
@@ -34,7 +53,6 @@ export const DynamicPage = () => {
 
 	const { routes, permissions } = useApp();
 	const routeTree = useMemo(() => buildTree(routes), [routes]);
-
 	const matched = useMemo(() => findRoute(routeTree, currentPath), [routeTree, currentPath]);
 
 	if (!matched) return <NotFound />;
@@ -44,17 +62,7 @@ export const DynamicPage = () => {
 		if (!hasPermission) return <Navigate to="/403" replace />;
 	}
 
-	const LazyComponent = useMemo(() => {
-		if (!matched.component) return null;
-		const path = `../pages${matched.component}.tsx`;
-		const loader = modules[path];
-		if (!loader) {
-			console.error(`[Router] No matching module found for path: ${path}`);
-			return null;
-		}
-		return lazy(() => loader() as Promise<PageModule>);
-	}, [matched.component]);
-
+	const LazyComponent = matched.component ? getLazyComponent(matched.component) : null;
 	if (!LazyComponent) return <NotFound />;
 
 	return (
