@@ -1,11 +1,9 @@
 import { apiLogin, apiLogout } from "@/pages/login/service";
 import type { ApiLoginReq } from "@/pages/login/type";
-import { appActions, useApp } from "@/stores/use-app";
+import { appActions } from "@/stores/use-app";
 import { getToken, removeToken, setToken } from "@/utils/auth";
 
 export function useAuth() {
-	const { user } = useApp();
-
 	const token = getToken();
 	const isAuth = !!token;
 
@@ -22,5 +20,5 @@ export function useAuth() {
 		removeToken();
 	};
 
-	return { user, isAuth, login, logout };
+	return { isAuth, login, logout };
 }
