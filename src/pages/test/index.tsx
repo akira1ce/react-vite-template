@@ -1,29 +1,46 @@
-import { Minus, Plus } from "lucide-react";
-import { AnimateNumber } from "@/components/animate-number";
-import { counterActions, useCounter } from "@/stores/use-counter";
+import { useTranslation } from "react-i18next";
 
-export default function Test() {
-	const count = useCounter((state) => state.count);
+const LANGUAGES = [
+	{ code: "zh", label: "中文" },
+	{ code: "en", label: "English" },
+] as const;
+
+const TestPage = () => {
+	const { t, i18n } = useTranslation();
 
 	return (
-		<div className="flex h-full items-center justify-center bg-linear-to-br from-slate-100 to-slate-200">
-			<div className="flex items-center gap-6 rounded-2xl bg-white px-8 py-6 shadow-lg">
-				<div
-					className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-slate-100 transition hover:bg-slate-200"
-					onClick={() => counterActions.decrement()}
-				>
-					<Minus className="h-5 w-5" />
-				</div>
+		<div className="flex h-full w-full flex-col items-center justify-center gap-6">
+			<div className="flex gap-2">
+				{LANGUAGES.map(({ code, label }) => (
+					<button
+						key={code}
+						onClick={() => i18n.changeLanguage(code)}
+						className={`rounded-lg px-4 py-2 text-sm transition-colors ${
+							i18n.language === code
+								? "bg-gray-900 text-white"
+								: "bg-gray-100 text-gray-700 hover:bg-gray-200"
+						}`}
+					>
+						{label}
+					</button>
+				))}
+			</div>
 
-				<AnimateNumber value={count} />
-
-				<div
-					className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-slate-100 transition hover:bg-slate-200"
-					onClick={() => counterActions.increment()}
-				>
-					<Plus className="h-5 w-5" />
-				</div>
+			<div className="flex flex-col items-center gap-2 text-lg">
+				<p>{t("common:hello")}</p>
+				<p>{t("common:welcome", { name: "Akira" })}</p>
+				<p>
+					{t("common:submit")} / {t("common:cancel")}
+				</p>
+				<p>---</p>
+				<p>{t("login:title")}</p>
+				<p>
+					{t("login:username")} / {t("login:password")}
+				</p>
+				<p>{t("login:submit")}</p>
 			</div>
 		</div>
 	);
-}
+};
+
+export default TestPage;

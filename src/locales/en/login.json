@@ -1,0 +1,8 @@
+{
+	"title": "Login",
+	"username": "Username",
+	"password": "Password",
+	"submit": "Login",
+	"remember": "Remember me",
+	"forgot": "Forgot password?"
+}

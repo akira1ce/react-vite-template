@@ -1,0 +1,8 @@
+{
+	"hello": "你好",
+	"welcome": "欢迎，{{name}}",
+	"submit": "提交",
+	"cancel": "取消",
+	"confirm": "确认",
+	"loading": "加载中..."
+}

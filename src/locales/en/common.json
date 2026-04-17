@@ -1,0 +1,8 @@
+{
+	"hello": "Hello",
+	"welcome": "Welcome, {{name}}",
+	"submit": "Submit",
+	"cancel": "Cancel",
+	"confirm": "Confirm",
+	"loading": "Loading..."
+}

@@ -10,9 +10,9 @@ export const baseRoutes: RouteObject[] = [
 		path: "/",
 		element: <BaseLayout />,
 		errorElement: <ErrorBoundary />,
-		children: [],
+		children: [{ path: "/login", element: <Login /> }],
 	},
-	{ path: "/login", element: <Login /> },
+
 	{ path: "/403", element: <Forbidden /> },
 	{ path: "*", element: <NotFound /> },
 ];
