@@ -1,6 +1,6 @@
 import { apiGetPermissions, apiGetRoutes } from "@/services";
 import { localStorageHelper as ls } from "@/utils/localstorage-helper";
-import { createWithImmer } from "@/utils/zustand";
+import { createSelectors, createWithImmer } from "@/utils/zustand";
 
 export interface User {
 	id: number;
@@ -41,7 +41,7 @@ const getInitialState = (): AppStore => ({
 	loading: false,
 });
 
-export const useApp = createWithImmer(getInitialState);
+export const useApp = createSelectors(createWithImmer(getInitialState));
 
 const set = useApp.setState;
 

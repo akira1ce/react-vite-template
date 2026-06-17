@@ -21,7 +21,7 @@ const findFirstLeaf = (tree: TreeRoute[]): Route | null => {
 };
 
 export const DefaultRedirect = () => {
-	const { routes } = useApp();
+	const routes = useApp.use.routes();
 	const tree = useMemo(() => buildTree(routes), [routes]);
 	const firstLeaf = useMemo(() => findFirstLeaf(tree), [tree]);
 

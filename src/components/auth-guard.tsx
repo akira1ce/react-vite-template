@@ -6,7 +6,7 @@ import { appActions, appEffects, useApp } from "@/stores/use-app";
 
 export const AuthGuard = () => {
 	const { isAuth } = useAuth();
-	const { loading } = useApp();
+	const loading = useApp.use.loading();
 
 	useEffect(() => {
 		if (!isAuth) return;

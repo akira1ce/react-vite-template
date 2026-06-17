@@ -51,7 +51,8 @@ export const DynamicPage = () => {
 	const { "*": splat = "" } = useParams();
 	const currentPath = `/${splat}`;
 
-	const { routes, permissions } = useApp();
+	const routes = useApp.use.routes();
+	const permissions = useApp.use.permissions();
 	const routeTree = useMemo(() => buildTree(routes), [routes]);
 	const matched = useMemo(() => findRoute(routeTree, currentPath), [routeTree, currentPath]);
 

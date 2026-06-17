@@ -1,8 +1,6 @@
-import { createWithImmer } from "@/utils/zustand";
+import { createSelectors, createWithImmer } from "@/utils/zustand";
 
-export const useCounter = createWithImmer(() => ({
-	count: 0,
-}));
+export const useCounter = createSelectors(createWithImmer(() => ({ count: 0 })));
 
 const set = useCounter.setState;
 
