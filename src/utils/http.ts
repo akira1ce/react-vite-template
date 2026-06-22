@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import { saveAs } from "file-saver";
 import { getToken } from "./auth";
 
 /** 扩展 AxiosRequestConfig 以支持自定义属性 */
@@ -320,6 +321,54 @@ export function post<T = any>(url: string, data: any, config: RequestConfig = {}
 
 export function put<T = any>(url: string, data: any, config: RequestConfig = {}): Promise<T> {
 	return request<T>(url, { ...config, method: "put", data });
+}
+
+/**
+ * 下载文件 — 支持 GET / POST，响应使用 blob 并通过 file-saver 保存
+ * @param url    请求地址
+ * @param filename  保存的文件名；不传则尝试从 Content-Disposition 解析，最终回退到 URL 末段
+ * @param method    HTTP 方法，默认 "get"
+ * @param data     POST 请求体（GET 时忽略）
+ * @param config   其余 Axios 配置
+ */
+export async function download(
+	url: string,
+	filename?: string,
+	method: "get" | "post" = "get",
+	data?: any,
+	config: RequestConfig = {}
+): Promise<void> {
+	const response = await service({
+		url,
+		method,
+		data,
+		responseType: "blob",
+		...config,
+	} as AxiosRequestConfig);
+
+	const blob = response as unknown as Blob;
+
+	/** 1. 显式传入的文件名 */
+	let finalName = filename;
+
+	/** 2. 从 Content-Disposition 解析 */
+	if (!finalName) {
+		const disposition =
+			(response as any).headers?.["content-disposition"] ?? (response as any).config?.headers?.["content-disposition"];
+		if (disposition) {
+			const match = disposition.match(/filename\*?=(?:UTF-8''|")?([^";\r\n]+)/i);
+			if (match) {
+				finalName = decodeURIComponent(match[1]);
+			}
+		}
+	}
+
+	/** 3. 回退：取 URL 最后一段 */
+	if (!finalName) {
+		finalName = url.split("/").pop() || "download";
+	}
+
+	saveAs(blob, finalName);
 }
 
 /**
