@@ -2,22 +2,11 @@
  *「service」
  * 应该与服务端提供的接口文档严格保持一致
  */
-import type { UserInfo } from "./type";
+import { MOCK_USERS } from "./constant";
 
-export async function getUpUserInfo() {
-	const url = "/randomuser-api/api/?results=2&inc=name,gender,email,nat,picture";
-	return await fetch(url).then((res) => res.json());
-}
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function getDownUserInfo() {
-	const url = "/randomuser-api/api/?results=2&inc=name,gender,email,nat,picture";
-	return await fetch(url).then((res) => res.json());
-}
-
-/* 多接口合并 */
 export async function getUsersInfo() {
-	const results = await Promise.all([getUpUserInfo(), getDownUserInfo()]);
-	return results.reduce<UserInfo[]>((prev, cur) => {
-		return prev.concat(cur.results);
-	}, []);
+	await sleep(300);
+	return MOCK_USERS;
 }

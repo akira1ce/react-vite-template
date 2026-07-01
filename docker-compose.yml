@@ -1,0 +1,12 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: react-vite-app
+    ports:
+      - "${APP_PORT:-8080}:80"
+    restart: unless-stopped
+    # 如需挂载自定义 nginx 配置（热更新不需重建镜像）
+    # volumes:
+    #   - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro

@@ -1,0 +1,43 @@
+# Dependencies (在容器内通过 yarn install 安装，不需拷贝)
+node_modules/
+
+# Git 仓库
+.git/
+.gitignore
+
+# 构建产物
+dist/
+dist-ssr/
+
+# IDE & 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+logs/
+npm-debug.log*
+
+# 环境变量文件
+.env
+.env.local
+.env.*.local
+
+# Codegraph 索引
+.codegraph/
+
+# Docker 自身，避免递归
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# 文档/其他
+README.md
+LICENSE
