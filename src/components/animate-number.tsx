@@ -31,10 +31,12 @@ const Digit = ({ value }: { value: number }) => {
 };
 
 export const AnimateNumber = ({ value }: { value: number }) => {
-	const digits = String(value).split("");
+	const isNegative = value < 0;
+	const digits = String(Math.abs(value)).split("");
 
 	return (
 		<div className="flex items-center justify-center text-3xl font-semibold [font-variant-numeric:tabular-nums]">
+			{isNegative && <span className="mr-px">-</span>}
 			{digits.map((d, i) => (
 				<Digit key={i} value={Number(d)} />
 			))}
